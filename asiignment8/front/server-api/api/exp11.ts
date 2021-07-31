@@ -51,8 +51,8 @@ router.get("/:id", (req, res) => {
     let id = req.params.id;
     const query = `SELECT U.id, U."first__name", U."middle__name", U."last__name", U.email, U."phone_number", 
     U.address,U.datetime, U.name as "customer_Name", role.name as role FROM (
-    SELECT student.*, customer.name  FROM student INNER JOIN customer ON student."id"=customer.${id})
-     as U INNER JOIN role on U.role=role.name;`
+    SELECT users.*, customer.name  FROM users INNER JOIN customer ON users."id"=customer.${id})
+     as U INNER JOIN role on U.role=role.name where U.id=${id};`
     pool.query(query, (error: any, result: any) => {
         if (error) {
             throw error
