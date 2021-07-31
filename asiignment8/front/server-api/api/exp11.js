@@ -23,7 +23,7 @@ router.get("/", function (req, res) {
 //SEND A SPECIFIC MEMEBER FROM JSON DATA
 router.get("/:id", function (req, res) {
     var id = req.params.id;
-    var query = "SELECT U.id, U.\"first__name\", U.\"middle__name\", U.\"last__name\", U.email, U.\"phone_number\", \n    U.address,U.datetime, U.name as \"customer_Name\", role.name as role FROM (\n    SELECT student.*, customer.name  FROM student INNER JOIN customer ON student.\"id\"=customer." + id + ")\n     as U INNER JOIN role on U.role=role.name;";
+    var query = "SELECT U.id, U.\"first__name\", U.\"middle__name\", U.\"last__name\", U.email, U.\"phone_number\", \n    U.address,U.datetime, U.name as \"customer_Name\", role.name as role FROM (\n    SELECT users.*, customer.name  FROM users INNER JOIN customer ON users.\"id\"=customer." + id + ")\n     as U INNER JOIN role on U.role=role.name where U.id=${id};";
     pool.query(query, function (error, result) {
         if (error) {
             throw error;
